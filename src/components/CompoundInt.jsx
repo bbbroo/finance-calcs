@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import CurrencyInput from 'react-currency-input-field';
 import {
+  AreaChart,
+  Area,
   BarChart,
   Bar,
   XAxis,
@@ -52,10 +54,21 @@ const CompoundInt = () => {
       } else {
         newval = principle * z ** i + additions * ((z ** i - 1) / rate);
       }
-      valuePerYear.push({ name: i, Value: newval.toFixed(2) });
+      valuePerYear.push({ name: i, Value: Number(newval.toFixed(2)) });
     }
     setValuePerYear(valuePerYear);
     initial = false;
+  };
+
+  const GradientColors = () => {
+    return (
+     <linearGradient id="colorView" x1="0" y1="0" x2="0" y2="1">
+       <stop offset="30%" stopColor="#8884d8" stopOpacity={0.4} />
+       <stop offset="75%" stopColor="#ff9bff81" stopOpacity={0.3} />
+                 === ADD MORE COLOURS HERE ===
+       <stop offset="95%" stopColor="#FFFFFF" stopOpacity={0.2} />
+     </linearGradient>
+    );
   };
 
   return (
@@ -158,15 +171,35 @@ const CompoundInt = () => {
       </form>
       {!initial &&
       <div className="d-flex justify-content-center">
-        <BarChart width={600} height={300} data={valuePerYear}>
-          <XAxis dataKey="name" stroke="#8884d8" />
-          <YAxis dataKey={"Value"} width={100} tickFormatter={(value) => `$${new Intl.NumberFormat('en').format(value)}`}>
+        <AreaChart width={600} height={300} data={valuePerYear}>
+          <defs>
+            <GradientColors />
+          </defs>
+          <XAxis dataKey="name" stroke="#8884d8">
+          <Label
+                value="Years"
+                position="top"
+                fontSize={18}
+                fill="#8884d8"
+              />
+          </XAxis>
+          <YAxis dataKey={"Value"} stroke="#8884d8" width={60} tickCount={20} tickFormatter={(value) =>
+    `$${new Intl.NumberFormat("en-US", {
+      notation: "compact",
+      compactDisplay: "short",
+    }).format(value)}`
+  }>
             <Label />
           </YAxis>
-          <Tooltip wrapperStyle={{ width: 170 }} formatter={(value) => `$${new Intl.NumberFormat('en').format(value)}`} />
-          <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-          <Bar dataKey="Value" fill="#8884d8" barSize={30} />
-        </BarChart>
+          <Tooltip wrapperStyle={{ width: 170 }} itemStyle={{ color: "#17181f" }}
+              contentStyle={{
+                color: "#17181f",
+                backgroundColor: "#ccc",
+                borderRadius: "30px",
+                opacity: 0.9,
+              }} labelFormatter={(name) => "Year: " + name} formatter={(value) => `$${new Intl.NumberFormat('en').format(value)}`} />
+          <Area dataKey="Value" type="monotone" stroke="#8884d8" strokeWidth={3} strokeOpacity={1} arSize={30} fill="url(#colorView)" />
+        </AreaChart>
       </div>}
     </div>
   );

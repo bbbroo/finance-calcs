@@ -38,6 +38,7 @@ h3 {
   align-items: center;
 }
 
+
 input {
   height: 20px;
   margin-left: 10px;
@@ -62,6 +63,12 @@ form p {
   width: 150px;
 }
 
+form h5 {
+  display: inline-block;
+  text-align: right;
+  width: 200px;
+}
+
 .comp-time {
   text-align: center;
   height: auto;
@@ -72,8 +79,11 @@ form p {
   display: flex;
   height: auto;
   text-align: center;
+
+  
 }
 
 .height-up {
   height: 25px;
+
 }
