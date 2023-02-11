@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import CurrencyInput from 'react-currency-input-field';
 import {
   BarChart,
   Bar,
@@ -29,7 +30,7 @@ const CompoundInt = () => {
     const additions = Number(annAdd) / freq;
     const years = Number(yearsGrow);
     const times = years * freq;
-    const rate = Number(intRate);
+    const rate = Number(intRate)/100;
     const z = 1 + rate / freq;
     const futureValueA =
       principle * z ** times + additions * ((z ** (times + 1) - z) / (z - 1));
@@ -57,53 +58,33 @@ const CompoundInt = () => {
     initial = false;
   };
 
-  // const [state, setState] = useState({
-  //   labels: ["$"],
-  //   datasets: [
-  //     {
-  //       backgroundColor: "rgba(75,192,192,1)",
-  //       borderColor: "rgba(0,0,0,1)",
-  //       borderWidth: 2,
-  //       data: [0],
-  //     },
-  //   ],
-  // });
-
-  // useEffect(() => {
-  //   setState({
-  //     labels: [state],
-  //     datasets: [
-  //       {
-  //         backgroundColor: "rgba(75,192,192,1)",
-  //         borderColor: "rgba(0,0,0,1)",
-  //         borderWidth: 2,
-  //         data: [state],
-  //       },
-  //     ],
-  //   });
-  // }, [fv]);
-
   return (
     <div>
       <h1>Compound Interest Calculator</h1>
       <form className="form" action="" method="post">
         <div className="inline p-2">
           <p className="m-0">Current Principle</p>
-          <input
-            type="text"
-            name=""
-            value={curPrin}
-            onChange={(ev) => setCurPrin(ev.target.value)}
-          />
+          <CurrencyInput
+          id="input-example"
+          name="input-name"
+          value={curPrin}
+          decimalsLimit={2}
+          prefix="$"
+          allowNegativeValue="false"
+          onValueChange={(value) => setCurPrin(value)}
+        />
         </div>
         <div className="inline p-2">
           <p className="m-0">Annual Addition</p>
-          <input
-            type="text"
-            name=""
-            value={annAdd}
-            onChange={(ev) => setAnnAdd(ev.target.value)}
-          />
+          <CurrencyInput
+          id="input-example"
+          name="input-name"
+          value={annAdd}
+          decimalsLimit={2}
+          prefix="$"
+          allowNegativeValue="false"
+          onValueChange={(value) => setAnnAdd(value)}
+        />
         </div>
         <div className="inline p-2">
           <p className="m-0">Years To Grow</p>
@@ -116,12 +97,14 @@ const CompoundInt = () => {
         </div>
         <div className="inline p-2">
           <p className="m-0">Interest Rate</p>
-          <input
-            type="text"
-            name=""
-            value={intRate}
-            onChange={(ev) => setIntRate(ev.target.value)}
-          />
+          <CurrencyInput
+          id="input-example"
+          name="input-name"
+          value={intRate}
+          suffix="%"
+          allowNegativeValue="false"
+          onValueChange={(value) => setIntRate(value)}
+        />
         </div>
         <div className="inline p-2">
           <p className="m-0">Compound Frequency Per Year</p>

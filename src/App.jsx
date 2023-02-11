@@ -6,6 +6,7 @@ import Banner from "./components/Banner";
 import Footer from "./components/Footer";
 import CompoundInt from "./components/CompoundInt";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Mortgage from "./components/Mortgage";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -16,6 +17,7 @@ function App() {
       <Routes> 
           <Route exact path="/" element={<Banner />}/>
           <Route exact path="/compoundint" element={<CompoundInt/>}/>
+          <Route exact path="/mortgage" element={<Mortgage />}/>
       </Routes>
       <Footer />
     </div>
