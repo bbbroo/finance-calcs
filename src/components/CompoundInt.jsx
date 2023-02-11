@@ -51,9 +51,9 @@ const CompoundInt = () => {
     for (let i = 1; i <= years; i++) {
       if (compTime === "Start") {
         newval =
-          principle * z ** i + additions * ((z ** (i + 1) - z) / (z - 1));
+          principle * z ** (i*freq) + additions * ((z ** ((i*freq) + 1) - z) / (z - 1));
       } else {
-        newval = principle * z ** i + additions * ((z ** i - 1) / rate);
+        newval = principle * z ** (i*freq) + additions * ((z ** (i*freq) - 1) / rate);
       }
       valuePerYear.push({ name: i, Value: Number(newval.toFixed(2)) });
     }
