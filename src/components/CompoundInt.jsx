@@ -1,27 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { Bar } from "react-chartjs-2";
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
   Tooltip,
   Legend,
-} from 'chart.js';
+  CartesianGrid,
+  Label
+} from "recharts";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
-
-
+let datas = new Array(30).fill({ name: "", Value: 0 });
+let initial =true;
 
 const CompoundInt = () => {
+  let [valuePerYear, setValuePerYear] = useState(datas);
   const [curPrin, setCurPrin] = useState("");
   const [annAdd, setAnnAdd] = useState("");
   const [yearsGrow, setYearsGrow] = useState("");
@@ -33,11 +26,11 @@ const CompoundInt = () => {
   const handleChange = (event) => {
     const freq = Number(compFreq);
     const principle = Number(curPrin);
-    const additions = Number(annAdd)/freq;
+    const additions = Number(annAdd) / freq;
     const years = Number(yearsGrow);
-    const times = years*freq;
+    const times = years * freq;
     const rate = Number(intRate);
-    const z = 1 + (rate/freq);
+    const z = 1 + rate / freq;
     const futureValueA =
       principle * z ** times + additions * ((z ** (times + 1) - z) / (z - 1));
     const futureValueB =
@@ -49,21 +42,19 @@ const CompoundInt = () => {
     );
 
     const yearsTotal = [];
-    const valuePerYear = [];
+    valuePerYear = [];
+    let newval = 0;
     for (let i = 1; i <= years; i++) {
-      yearsTotal.push(i);
       if (compTime === "Start") {
-        valuePerYear.push(
-          principle * z ** i + additions * ((z ** (i + 1) - z) / (z - 1))
-        );
+        newval =
+          principle * z ** i + additions * ((z ** (i + 1) - z) / (z - 1));
       } else {
-        valuePerYear.push(
-          principle * z ** i + additions * ((z ** i - 1) / rate)
-        );
+        newval = principle * z ** i + additions * ((z ** i - 1) / rate);
       }
+      valuePerYear.push({ name: i, Value: newval.toFixed(2) });
     }
-    console.log(yearsTotal);
-    console.log(valuePerYear);
+    setValuePerYear(valuePerYear);
+    initial = false;
   };
 
   // const [state, setState] = useState({
@@ -182,22 +173,18 @@ const CompoundInt = () => {
           />
         </div>
       </form>
-      {/* <div>
-        <Bar
-          data={state}
-          options={{
-            title: {
-              display: true,
-              text: "$ Per Year",
-              fontSize: 20,
-            },
-            legend: {
-              display: true,
-              position: "right",
-            },
-          }}
-        />
-      </div> */}
+      {!initial &&
+      <div className="d-flex justify-content-center">
+        <BarChart width={600} height={300} data={valuePerYear}>
+          <XAxis dataKey="name" stroke="#8884d8" />
+          <YAxis dataKey={"Value"} width={100} tickFormatter={(value) => `$${new Intl.NumberFormat('en').format(value)}`}>
+            <Label />
+          </YAxis>
+          <Tooltip wrapperStyle={{ width: 170 }} formatter={(value) => `$${new Intl.NumberFormat('en').format(value)}`} />
+          <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+          <Bar dataKey="Value" fill="#8884d8" barSize={30} />
+        </BarChart>
+      </div>}
     </div>
   );
 };
