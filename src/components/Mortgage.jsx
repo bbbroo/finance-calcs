@@ -11,6 +11,7 @@ import {
   Legend,
   CartesianGrid,
   Label,
+  ResponsiveContainer
 } from "recharts";
 
 let initial = true;
@@ -135,68 +136,70 @@ function Mortgage() {
         </div>
       </form>
       {!initial && (
-        <div className="d-flex justify-content-center">
-          <AreaChart width={600} height={300} data={amtLeft}>
-            <defs>
-              <GradientColors />
-            </defs>
-            <XAxis dataKey="name" stroke="#8884d8">
-              <Label
-                value="Years"
-                position="top"
-                fontSize={18}
-                fill="#8884d8"
+        <div className="d-flex justify-content-center align-items-center m-auto mb-4 chartwidth">
+          <ResponsiveContainer width="95%" height={400} max-width={"300px"}>
+            <AreaChart width={600} height={300} data={amtLeft}>
+              <defs>
+                <GradientColors />
+              </defs>
+              <XAxis dataKey="name" stroke="#8884d8">
+                <Label
+                  value="Years"
+                  position="top"
+                  fontSize={18}
+                  fill="#8884d8"
+                />
+              </XAxis>
+              <YAxis
+                dataKey={"Debt"}
+                stroke="#8884d8"
+                width={60}
+                tickCount={20}
+                tickFormatter={(value) =>
+                  `$${new Intl.NumberFormat("en-US", {
+                    notation: "compact",
+                    compactDisplay: "short",
+                  }).format(value)}`
+                }
+              ></YAxis>
+              <Tooltip
+                wrapperStyle={{ width: 170 }}
+                itemStyle={{ color: "#17181f" }}
+                contentStyle={{
+                  color: "#17181f",
+                  backgroundColor: "#ccc",
+                  borderRadius: "30px",
+                  opacity: 0.9,
+                }}
+                labelFormatter={(name) => "Year: " + name}
+                formatter={(value) =>
+                  `$${new Intl.NumberFormat("en").format(value)}`
+                }
               />
-            </XAxis>
-            <YAxis
-              dataKey={"Debt"}
-              stroke="#8884d8"
-              width={60}
-              tickCount={20}
-              tickFormatter={(value) =>
-                `$${new Intl.NumberFormat("en-US", {
-                  notation: "compact",
-                  compactDisplay: "short",
-                }).format(value)}`
-              }
-            ></YAxis>
-            <Tooltip
-              wrapperStyle={{ width: 170 }}
-              itemStyle={{ color: "#17181f" }}
-              contentStyle={{
-                color: "#17181f",
-                backgroundColor: "#ccc",
-                borderRadius: "30px",
-                opacity: 0.9,
-              }}
-              labelFormatter={(name) => "Year: " + name}
-              formatter={(value) =>
-                `$${new Intl.NumberFormat("en").format(value)}`
-              }
-            />
-            <Area
-              dataKey="Debt"
-              type="monotone"
-              stroke="#8884d8"
-              strokeWidth={3}
-              strokeOpacity={1}
-              arSize={30}
-              fill="url(#colorView)"
-            />
-            <Area
-              dataKey="Equity"
-              type="monotone"
-              stroke="#72A6A6"
-              strokeWidth={3}
-              strokeOpacity={1}
-              arSize={30}
-              fill="url(#colorView)"
-            />
-            <Legend
-              iconSize={25}
-              wrapperStyle={{ fontSize: "18px", marginLeft: "40px" }}
-            />
-          </AreaChart>
+              <Area
+                dataKey="Debt"
+                type="monotone"
+                stroke="#8884d8"
+                strokeWidth={3}
+                strokeOpacity={1}
+                arSize={30}
+                fill="url(#colorView)"
+              />
+              <Area
+                dataKey="Equity"
+                type="monotone"
+                stroke="#72A6A6"
+                strokeWidth={3}
+                strokeOpacity={1}
+                arSize={30}
+                fill="url(#colorView)"
+              />
+              <Legend
+                iconSize={25}
+                wrapperStyle={{ fontSize: "18px", paddingLeft: "60px" }}
+              />
+            </AreaChart>
+          </ResponsiveContainer>
         </div>
       )}
     </div>

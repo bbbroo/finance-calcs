@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import CurrencyInput from 'react-currency-input-field';
+import CurrencyInput from "react-currency-input-field";
 import {
   AreaChart,
   Area,
@@ -10,11 +10,12 @@ import {
   Tooltip,
   Legend,
   CartesianGrid,
-  Label
+  Label,
+  ResponsiveContainer,
 } from "recharts";
 
 let datas = new Array(30).fill({ name: "", Value: 0 });
-let initial =true;
+let initial = true;
 
 const CompoundInt = () => {
   let [valuePerYear, setValuePerYear] = useState(datas);
@@ -32,7 +33,7 @@ const CompoundInt = () => {
     const additions = Number(annAdd) / freq;
     const years = Number(yearsGrow);
     const times = years * freq;
-    const rate = Number(intRate)/100;
+    const rate = Number(intRate) / 100;
     const z = 1 + rate / freq;
     const futureValueA =
       principle * z ** times + additions * ((z ** (times + 1) - z) / (z - 1));
@@ -62,12 +63,12 @@ const CompoundInt = () => {
 
   const GradientColors = () => {
     return (
-     <linearGradient id="colorView" x1="0" y1="0" x2="0" y2="1">
-       <stop offset="30%" stopColor="#8884d8" stopOpacity={0.4} />
-       <stop offset="75%" stopColor="#ff9bff81" stopOpacity={0.3} />
-                 === ADD MORE COLOURS HERE ===
-       <stop offset="95%" stopColor="#FFFFFF" stopOpacity={0.2} />
-     </linearGradient>
+      <linearGradient id="colorView" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="30%" stopColor="#8884d8" stopOpacity={0.4} />
+        <stop offset="75%" stopColor="#ff9bff81" stopOpacity={0.3} />
+        === ADD MORE COLOURS HERE ===
+        <stop offset="95%" stopColor="#FFFFFF" stopOpacity={0.2} />
+      </linearGradient>
     );
   };
 
@@ -78,26 +79,26 @@ const CompoundInt = () => {
         <div className="inline p-2">
           <p className="m-0">Current Principle</p>
           <CurrencyInput
-          id="input-example"
-          name="input-name"
-          value={curPrin}
-          decimalsLimit={2}
-          prefix="$"
-          allowNegativeValue="false"
-          onValueChange={(value) => setCurPrin(value)}
-        />
+            id="input-example"
+            name="input-name"
+            value={curPrin}
+            decimalsLimit={2}
+            prefix="$"
+            allowNegativeValue="false"
+            onValueChange={(value) => setCurPrin(value)}
+          />
         </div>
         <div className="inline p-2">
           <p className="m-0">Annual Addition</p>
           <CurrencyInput
-          id="input-example"
-          name="input-name"
-          value={annAdd}
-          decimalsLimit={2}
-          prefix="$"
-          allowNegativeValue="false"
-          onValueChange={(value) => setAnnAdd(value)}
-        />
+            id="input-example"
+            name="input-name"
+            value={annAdd}
+            decimalsLimit={2}
+            prefix="$"
+            allowNegativeValue="false"
+            onValueChange={(value) => setAnnAdd(value)}
+          />
         </div>
         <div className="inline p-2">
           <p className="m-0">Years To Grow</p>
@@ -111,13 +112,13 @@ const CompoundInt = () => {
         <div className="inline p-2">
           <p className="m-0">Interest Rate</p>
           <CurrencyInput
-          id="input-example"
-          name="input-name"
-          value={intRate}
-          suffix="%"
-          allowNegativeValue="false"
-          onValueChange={(value) => setIntRate(value)}
-        />
+            id="input-example"
+            name="input-name"
+            value={intRate}
+            suffix="%"
+            allowNegativeValue="false"
+            onValueChange={(value) => setIntRate(value)}
+          />
         </div>
         <div className="inline p-2">
           <p className="m-0">Compound Frequency Per Year</p>
@@ -140,6 +141,7 @@ const CompoundInt = () => {
               onChange={(ev) => setCompTime(ev.target.value)}
             />
             Start
+            <div className="d-flex">
             <input
               className="comp-time"
               type="radio"
@@ -147,7 +149,9 @@ const CompoundInt = () => {
               value="End"
               onChange={(ev) => setCompTime(ev.target.value)}
             />
-            End of Compounding Period
+            <span className="d-flex text-align-right">End of Compounding Period</span> 
+            </div>
+            
           </fieldset>
         </div>
         <div className="button inline p-2">
@@ -169,38 +173,62 @@ const CompoundInt = () => {
           />
         </div>
       </form>
-      {!initial &&
-      <div className="d-flex justify-content-center">
-        <AreaChart width={600} height={300} data={valuePerYear}>
-          <defs>
-            <GradientColors />
-          </defs>
-          <XAxis dataKey="name" stroke="#8884d8">
-          <Label
-                value="Years"
-                position="top"
-                fontSize={18}
-                fill="#8884d8"
+      {!initial && (
+        <div className="d-flex justify-content-center align-items-center m-auto mb-4 chartwidth">
+          <ResponsiveContainer width="95%" height={400} max-width={"300px"}>
+            <AreaChart width={600} height={300} data={valuePerYear}>
+              <defs>
+                <GradientColors />
+              </defs>
+              <XAxis dataKey="name" stroke="#8884d8">
+                <Label
+                  value="Years"
+                  position="top"
+                  fontSize={18}
+                  fill="#8884d8"
+                />
+              </XAxis>
+              <YAxis
+                dataKey={"Value"}
+                stroke="#8884d8"
+                width={60}
+                tickCount={20}
+                tickFormatter={(value) =>
+                  `$${new Intl.NumberFormat("en-US", {
+                    notation: "compact",
+                    compactDisplay: "short",
+                  }).format(value)}`
+                }
+              >
+                <Label />
+              </YAxis>
+              <Tooltip
+                wrapperStyle={{ width: 170 }}
+                itemStyle={{ color: "#17181f" }}
+                contentStyle={{
+                  color: "#17181f",
+                  backgroundColor: "#ccc",
+                  borderRadius: "30px",
+                  opacity: 0.9,
+                }}
+                labelFormatter={(name) => "Year: " + name}
+                formatter={(value) =>
+                  `$${new Intl.NumberFormat("en").format(value)}`
+                }
               />
-          </XAxis>
-          <YAxis dataKey={"Value"} stroke="#8884d8" width={60} tickCount={20} tickFormatter={(value) =>
-    `$${new Intl.NumberFormat("en-US", {
-      notation: "compact",
-      compactDisplay: "short",
-    }).format(value)}`
-  }>
-            <Label />
-          </YAxis>
-          <Tooltip wrapperStyle={{ width: 170 }} itemStyle={{ color: "#17181f" }}
-              contentStyle={{
-                color: "#17181f",
-                backgroundColor: "#ccc",
-                borderRadius: "30px",
-                opacity: 0.9,
-              }} labelFormatter={(name) => "Year: " + name} formatter={(value) => `$${new Intl.NumberFormat('en').format(value)}`} />
-          <Area dataKey="Value" type="monotone" stroke="#8884d8" strokeWidth={3} strokeOpacity={1} arSize={30} fill="url(#colorView)" />
-        </AreaChart>
-      </div>}
+              <Area
+                dataKey="Value"
+                type="monotone"
+                stroke="#8884d8"
+                strokeWidth={3}
+                strokeOpacity={1}
+                arSize={30}
+                fill="url(#colorView)"
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
+      )}
     </div>
   );
 };
