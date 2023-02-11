@@ -4,7 +4,6 @@
 
 * {
   box-sizing: border-box;
-
 }
 
 body {
@@ -12,11 +11,19 @@ body {
   padding-top: 60px;
 }
 
-:root, body {
-  background: #2b5876;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #4e4376, #2b5876);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #4e4376, #2b5876); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  
+:root,
+body {
+  background: #2b5876; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #4e4376,
+    #2b5876
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #4e4376,
+    #2b5876
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .main {
@@ -25,7 +32,7 @@ body {
   text-align: center;
 }
 
-h1{
+h1 {
   text-align: center;
   color: #fff;
   margin: 0;
@@ -44,7 +51,6 @@ h3 {
   justify-content: center;
   align-items: center;
 }
-
 
 input {
   height: 20px;
@@ -86,28 +92,31 @@ form h5 {
   display: flex;
   height: auto;
   text-align: center;
-
-  
 }
 
 .height-up {
   height: 25px;
-
 }
 
 .chartwidth {
   max-width: 600px;
 }
 
-.legend-item-0 {
-  /* margin-left: 40px; */
-}
-
 .navbar,
 .navbar-default {
-  background: #0f0c29;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #2b2b4a, #433e82, #1b173e); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #0f0c29; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #24243e,
+    #302b63,
+    #0f0c29
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #2b2b4a,
+    #433e82,
+    #1b173e
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
-opacity: .98;
+  opacity: 0.98;
 }

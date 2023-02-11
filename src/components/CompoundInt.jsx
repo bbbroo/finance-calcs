@@ -129,29 +129,31 @@ const CompoundInt = () => {
             onChange={(ev) => setCompFreq(ev.target.value)}
           />
         </div>
-        <div className="inline p-2">
+        <div className="inline p-2 comp-fre">
           <p className="m-0">Additions Made At</p>
-          <fieldset id="compound-time">
-            <input
-              className="comp-time"
-              type="radio"
-              name="compound-time"
-              value="Start"
-              defaultChecked
-              onChange={(ev) => setCompTime(ev.target.value)}
-            />
-            Start
-            <div className="d-flex">
-            <input
-              className="comp-time"
-              type="radio"
-              name="compound-time"
-              value="End"
-              onChange={(ev) => setCompTime(ev.target.value)}
-            />
-            <span className="d-flex text-align-right">End of Compounding Period</span> 
+          <fieldset className="d-flex flex-wrap s-auto" id="compound-time">
+            <div className="d-flex justify-content-center align-items-center">
+              <input
+                className="comp-time"
+                type="radio"
+                name="compound-time"
+                value="Start"
+                defaultChecked
+                onChange={(ev) => setCompTime(ev.target.value)}
+              />
+              Start
+              <input
+                className="comp-time"
+                type="radio"
+                name="compound-time"
+                value="End"
+                onChange={(ev) => setCompTime(ev.target.value)}
+              />
+              End
             </div>
-            
+            <div className="d-flex text-center">
+              &nbsp;of Compounding Period
+            </div>
           </fieldset>
         </div>
         <div className="button inline p-2">
